@@ -73,7 +73,7 @@ class CommonParams(FairseqDataclass):
         default=False, metadata={"help": "don't flatten FP16 grads tensor"}
     )
     fp16_init_scale: int = field(
-        default=2 ** 7, metadata={"help": "default FP16 loss scale"}
+        default=2**7, metadata={"help": "default FP16 loss scale"}
     )
     fp16_scale_window: Optional[int] = field(
         default=None,
@@ -572,26 +572,30 @@ class EvalLMParams(FairseqDataclass):
 class TrainingConfig(FairseqDataclass):
     """Config for training, a composition of training params"""
 
-    common: CommonParams = CommonParams()
-    distributed_training: DistributedTrainingParams = DistributedTrainingParams()
-    dataset: DatasetParams = DatasetParams()
-    optimization: OptimizationParams = OptimizationParams()
-    checkpoint: CheckpointParams = CheckpointParams()
-    bmuf: FairseqBMUFConfig = FairseqBMUFConfig()
+    common: CommonParams = field(default_factory=CommonParams)
+    distributed_training: DistributedTrainingParams = field(
+        default_factory=DistributedTrainingParams
+    )
+    dataset: DatasetParams = field(default_factory=DatasetParams)
+    optimization: OptimizationParams = field(default_factory=OptimizationParams)
+    checkpoint: CheckpointParams = field(default_factory=CheckpointParams)
+    bmuf: FairseqBMUFConfig = field(default_factory=FairseqBMUFConfig)
 
 
 @dataclass
 class EvalLMConfig(FairseqDataclass):
     """Config for eval lm, a composition of eval_lm params"""
 
-    common: CommonParams = CommonParams()
-    distributed_training: DistributedTrainingParams = DistributedTrainingParams()
-    dataset: DatasetParams = DatasetParams()
-    optimization: OptimizationParams = OptimizationParams()
-    checkpoint: CheckpointParams = CheckpointParams()
-    bmuf: FairseqBMUFConfig = FairseqBMUFConfig()
-    common_eval: CommonEvalParams = CommonEvalParams()
-    eval_lm: EvalLMParams = EvalLMParams()
+    common: CommonParams = field(default_factory=CommonParams)
+    distributed_training: DistributedTrainingParams = field(
+        default_factory=DistributedTrainingParams
+    )
+    dataset: DatasetParams = field(default_factory=DatasetParams)
+    optimization: OptimizationParams = field(default_factory=OptimizationParams)
+    checkpoint: CheckpointParams = field(default_factory=CheckpointParams)
+    bmuf: FairseqBMUFConfig = field(default_factory=FairseqBMUFConfig)
+    common_eval: CommonEvalParams = field(default_factory=CommonEvalParams)
+    eval_lm: EvalLMParams = field(default_factory=EvalLMParams)
 
 
 def register_params_dataclass(
